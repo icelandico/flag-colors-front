@@ -4,16 +4,34 @@
   import {COUNTRIES_API} from './constants/api';
   import Header from "./components/Header.svelte";
   import Searchbar from "./components/Searchbar.svelte";
-  import type {Country} from "./types/api";
+  import type {Country, CountryColors} from "./types/api";
+  import CountryCard from "./components/CountryCard.svelte";
+  import {COUNTRY_COLORS} from "./constants/country_colors";
   let countries: Country[];
+  let modalOpened = false;
+  let countryColorsData: CountryColors;
 
   onMount(async () => {
     const countriesRes = await fetch(COUNTRIES_API);
     const countriesData = await countriesRes.json();
     setTimeout(() => {
-      countries = countriesData, 3000
+      countries = countriesData.sort((a, b) => a.name.common.localeCompare(b.name.common)), 3000
     });
   });
+
+  function toggleModal(countryCode: string) {
+    countryColorsData = getCountryColors(countryCode);
+    modalOpened = true;
+  }
+
+  function closeModal() {
+    countryColorsData = null;
+    modalOpened = false;
+  }
+
+  function getCountryColors(countryCode: string) {
+    return COUNTRY_COLORS.find(el => el.country === countryCode.toLowerCase());
+  }
 
 </script>
 
@@ -26,13 +44,40 @@
   <div class="countries__container">
     {#if countries}
       {#each countries as country (country.cca3)}
-        <article class="country__card">
-          <p>{country.name.common}</p>
-          <img style="outline: 1px solid #e7e7e7" src={country.flags[1]} />
-        </article>
+        <CountryCard country={country} toggleModal={toggleModal} />
       {/each}
     {/if}
   </div>
+  <dialog id="modal-example" open={modalOpened}>
+    <article>
+      <a href="#close"
+         aria-label="Close"
+         class="close"
+         data-target="modal-example"
+         on:click={closeModal}>
+      </a>
+      <h3>Flag colors</h3>
+      <div>
+        {#if countryColorsData}
+        {#each countryColorsData.flag_colors as color}
+          <div class="color__item">
+            <div class="color__sample" style={`background-color: rgb${color.colorCode}`}></div>
+            <div class="color__percent">{color.percent} %</div>
+          </div>
+        {/each}
+        {/if}
+      </div>
+      <footer>
+        <a href="#cancel"
+           role="button"
+           class="secondary"
+           data-target="modal-example"
+           on:click={closeModal}>
+          Close
+        </a>
+      </footer>
+    </article>
+  </dialog>
 </main>
 
 <style>
@@ -48,14 +93,18 @@
   grid-row-gap: 10px;
 }
 
-.country__card {
-  cursor: pointer;
-  transition: bottom 0.25s;
-  bottom: 0;
+.color__item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
-.country__card:hover {
-  position: relative;
-  bottom: 8px;
+.color__sample {
+  width: 30px;
+  height: 30px;
+  margin-right: 15px;
+  border-radius: 50%;
+  outline: 1px solid #e7e7e7;
 }
+
 </style>
