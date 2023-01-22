@@ -2,10 +2,9 @@
     export let country;
     export let toggleModal;
 
-
 </script>
 
-<article class="country__card" on:click={() => toggleModal(country.cca2)}>
+<article class="country__card" on:click={() => toggleModal(country.cca2, country.name.common)}>
     <p>{country.name.common}</p>
     <img style="outline: 1px solid #e7e7e7" src={country.flags[1]} />
 </article>

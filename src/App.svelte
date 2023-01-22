@@ -10,6 +10,7 @@
   let countries: Country[];
   let modalOpened = false;
   let countryColorsData: CountryColors;
+  let chosenCountry = '';
 
   onMount(async () => {
     const countriesRes = await fetch(COUNTRIES_API);
@@ -19,14 +20,16 @@
     });
   });
 
-  function toggleModal(countryCode: string) {
+  function toggleModal(countryCode: string, countryName) {
     countryColorsData = getCountryColors(countryCode);
     modalOpened = true;
+    chosenCountry = countryName
   }
 
   function closeModal() {
     countryColorsData = null;
     modalOpened = false;
+    chosenCountry = ''
   }
 
   function getCountryColors(countryCode: string) {
@@ -56,7 +59,7 @@
          data-target="modal-example"
          on:click={closeModal}>
       </a>
-      <h3>Flag colors</h3>
+      <h3>Flag colors of: {chosenCountry}</h3>
       <div>
         {#if countryColorsData}
         {#each countryColorsData.flag_colors as color}
