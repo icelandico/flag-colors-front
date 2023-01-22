@@ -90,10 +90,18 @@
 
 .countries__container {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(auto-fit, 1fr);
+  grid-template-columns: repeat(3, 30%);
   grid-column-gap: 15px;
-  grid-row-gap: 10px;
+  grid-template-rows: repeat(auto-fit, 1fr);
+
+}
+
+@media (min-width: 768px) {
+  .countries__container {
+    grid-template-columns: repeat(5, 1fr);
+    grid-column-gap: 15px;
+    grid-row-gap: 10px;
+  }
 }
 
 .color__item {
