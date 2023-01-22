@@ -3,7 +3,7 @@
 </script>
 
 <form>
-    <input bind:value={searchValue} type="text" id="searchPhrase" name="searchPhrase" placeholder="Look for...">
+    <input bind:value={searchValue} type="text" id="searchPhrase" name="searchPhrase" placeholder="Does not work yet :-)">
 
 </form>
 
