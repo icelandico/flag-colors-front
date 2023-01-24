@@ -9,6 +9,7 @@
     import {COUNTRY_COLORS} from "./constants/country_colors";
     import AuthorTab from "./components/AuthorTab.svelte";
     import Modal from "./components/Modal.svelte";
+    import NoResults from "./components/NoResults.svelte";
 
     let countries: Country[];
     let filteredCountries = [];
@@ -54,6 +55,9 @@
     <Searchbar bind:searchTerm on:input={searchCountry}/>
     {#if !countries}
         <article aria-busy="true"></article>
+    {/if}
+    {#if searchTerm && filteredCountries.length === 0}
+        <NoResults />
     {/if}
     <div class="countries__container">
         {#if filteredCountries.length > 0}
