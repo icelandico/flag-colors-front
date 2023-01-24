@@ -7,18 +7,27 @@
   import type {Country, CountryColors} from "./types/api";
   import CountryCard from "./components/CountryCard.svelte";
   import {COUNTRY_COLORS} from "./constants/country_colors";
+
   let countries: Country[];
+  let filteredCountries = [];
   let modalOpened = false;
   let countryColorsData: CountryColors;
   let chosenCountry = '';
+  let searchTerm = '';
 
   onMount(async () => {
     const countriesRes = await fetch(COUNTRIES_API);
     const countriesData = await countriesRes.json();
-    setTimeout(() => {
-      countries = countriesData.sort((a, b) => a.name.common.localeCompare(b.name.common)), 3000
-    });
+    countries = countriesData.sort((a, b) => a.name.common.localeCompare(b.name.common))
+    filteredCountries = countriesData.sort((a, b) => a.name.common.localeCompare(b.name.common));
   });
+
+  function searchCountry() {
+    filteredCountries = countries.filter(country => {
+      const countryName = country.name.common;
+      return countryName.toLowerCase().includes(searchTerm.toLowerCase());
+    })
+  }
 
   function toggleModal(countryCode: string, countryName) {
     countryColorsData = getCountryColors(countryCode);
@@ -40,13 +49,13 @@
 
 <main class="main-container">
   <Header />
-  <Searchbar />
+  <Searchbar bind:searchTerm on:input={searchCountry}/>
   {#if !countries}
     <article aria-busy="true"></article>
   {/if}
   <div class="countries__container">
-    {#if countries}
-      {#each countries as country (country.cca3)}
+    {#if filteredCountries.length > 0}
+      {#each filteredCountries as country (country.cca3)}
         <CountryCard country={country} toggleModal={toggleModal} />
       {/each}
     {/if}
