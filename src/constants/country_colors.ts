@@ -4700,11 +4700,11 @@ export const COUNTRY_COLORS = [
     "flag_colors": [
       {
         "colorCode": "(25, 138, 0)",
-        "percent": 75
+        "percent": 74
       },
       {
         "colorCode": "(239, 125, 0)",
-        "percent": 18
+        "percent": 10
       },
       {
         "colorCode": "(0, 0, 0)",
