@@ -4709,6 +4709,14 @@ export const COUNTRY_COLORS = [
       {
         "colorCode": "(0, 0, 0)",
         "percent": 8
+      },
+      {
+        "colorCode": "(222, 32, 16)",
+        "percent": 8
+      },
+      {
+        "colorCode": "(137, 72, 0)",
+        "percent": 1
       }
     ]
   },
