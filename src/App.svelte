@@ -98,7 +98,7 @@
 
 @media (min-width: 768px) {
   .countries__container {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     grid-column-gap: 15px;
     grid-row-gap: 10px;
   }
