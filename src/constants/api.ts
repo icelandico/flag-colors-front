@@ -1,1 +1,2 @@
-export const COUNTRIES_API = 'https://restcountries.com/v3/all?fields=name,flags,cca2,cca3';
+export const COUNTRIES_API =
+  'https://api.first.org/data/v1/countries?limit=250';
