@@ -31,7 +31,7 @@
   };
 
   onMount(async () => {
-    const countriesRes = await fetch(COUNTRIES_API);
+    const countriesRes = await fetch('/api/countries');
     const countriesCollection = await countriesRes.json();
     countries =  getCountriesArray(countriesCollection.data);
     filteredCountries = getCountriesArray(countriesCollection.data);
