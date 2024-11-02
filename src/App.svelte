@@ -32,7 +32,7 @@
 
   onMount(async () => {
   try {
-    const PROXY_URL = 'https://api.allorigins.win/raw?url=';
+    const PROXY_URL = 'https://corsproxy.io/?';
     const countriesRes = await fetch(PROXY_URL + encodeURIComponent(COUNTRIES_API));
     const countriesCollection = await countriesRes.json();
     countries = getCountriesArray(countriesCollection.data);
