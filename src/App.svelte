@@ -32,11 +32,8 @@
 
   onMount(async () => {
   try {
-    const COUNTRIES_API = '/api/data/v1/countries?limit=250';
     const PROXY_URL = 'https://api.allorigins.win/raw?url=';
-    const API_URL = 'https://api.first.org/data/v1/countries?limit=250';
-    
-    const countriesRes = await fetch(PROXY_URL + COUNTRIES_API);
+    const countriesRes = await fetch(PROXY_URL + encodeURIComponent(COUNTRIES_API));
     const countriesCollection = await countriesRes.json();
     countries = getCountriesArray(countriesCollection.data);
     filteredCountries = getCountriesArray(countriesCollection.data);
