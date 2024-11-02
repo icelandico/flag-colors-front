@@ -31,11 +31,27 @@
   };
 
   onMount(async () => {
-    const countriesRes = await fetch('/api/countries');
+  try {
+    const COUNTRIES_API = '/api/data/v1/countries?limit=250';
+    
+    console.log('Attempting to fetch from:', COUNTRIES_API);
+    const countriesRes = await fetch(COUNTRIES_API);
+    console.log('Response status:', countriesRes.status);
+    console.log('Response headers:', Object.fromEntries(countriesRes.headers));
+    
     const countriesCollection = await countriesRes.json();
-    countries =  getCountriesArray(countriesCollection.data);
+    console.log('Data received:', countriesCollection);
+    
+    countries = getCountriesArray(countriesCollection.data);
     filteredCountries = getCountriesArray(countriesCollection.data);
-  });
+  } catch (error) {
+    console.error('Detailed error:', {
+      message: error.message,
+      stack: error.stack,
+      response: error.response
+    });
+  }
+});
 
   function searchCountry() {
     filteredCountries = countries.filter((country) => {
