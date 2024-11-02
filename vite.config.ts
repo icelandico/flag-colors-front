@@ -3,7 +3,7 @@ import { svelte } from '@sveltejs/vite-plugin-svelte'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/flag-colors-front",
+  base: "/flag-colors-front/",
   plugins: [svelte()],
   server: {
     proxy: {
